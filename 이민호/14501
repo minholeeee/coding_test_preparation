@@ -1,0 +1,47 @@
+dx = [-1, 1, 0, 0]
+dy = [0, 0, -1, 1]
+def dfs(y, x, _map):
+    _map[y][x] = 2
+    for d in range(len(dx)):
+        if len(_map) > y + dx[d] >= 0 and len(_map[0]) > x + dy[d] >= 0:
+            if _map[y + dx[d]][x + dy[d]] == 0:
+                dfs(y + dx[d], x + dy[d], _map)
+
+def go_virus(_map):
+    virus = []
+    for y in range(len(_map)):
+        for x in range(len(_map[y])):
+            if _map[y][x] == 2:
+                virus.append([y, x])
+    for vi in virus:
+        y = vi[0]
+        x = vi[1]
+        dfs(y, x, _map)
+        #print(_map)
+
+n, m = map(int, input().split())
+map_ori = [list(map(int, input().split())) for _ in range(n)]
+spaces = []
+for i in range(n):
+    for j in range(m):
+        if map_ori[i][j] == 0:
+            spaces.append([i, j])
+
+from itertools import combinations
+how = list(combinations(spaces, 3))
+ch = 0
+for hs in how:
+    map_mini = []
+    for i in range(len(map_ori)):
+        map_mini.append(map_ori[i][:])
+    for h in hs:
+        map_mini[h[0]][h[1]] = 1
+    go_virus(map_mini)
+    num = 0
+    for i in range(n):
+        for j in range(m):
+            if map_mini[i][j] == 0:
+                num += 1
+    if num > ch:
+        ch = num
+print(ch)
