@@ -1,0 +1,26 @@
+n, m = map(int, input().split())
+r, c, d = map(int, input().split())
+_map = [list(map(int, input().split())) for _ in range(n)]
+dx = [0, 1, 0, -1]
+dy = [-1, 0, 1, 0]
+answer = 0
+while (True):
+    if _map[r][c] == 0:
+        _map[r][c] = 2
+        answer += 1
+    flag = False
+    for _ in range(4):
+        d += 3
+        if _map[r + dy[d % 4]][c + dx[d % 4]] == 0:
+            flag = True
+            break
+    if not flag:
+        if _map[r - dy[d % 4]][c - dx[d % 4]] == 1:
+            break
+        r -= dy[d % 4]
+        c -= dx[d % 4]
+        continue
+
+    r += dy[d % 4]
+    c += dx[d % 4]
+print(answer)
