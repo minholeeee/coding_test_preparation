@@ -3,6 +3,8 @@ def s_4(x, y, monun):
         return 0
     if len(monun) <= y + 2:
         return 0
+        
+        
     return monun[y][x + 1] + monun[y + 1][x + 1] + monun[y + 2][x + 1] + monun[y + 1][x]
 def sv_1(x, y, monun):
     if len(monun[0]) <= x + 1:
